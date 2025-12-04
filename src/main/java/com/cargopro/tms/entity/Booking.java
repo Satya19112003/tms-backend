@@ -1,26 +1,24 @@
 package com.cargopro.tms.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Data
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID bookingId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "load_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "load_id")
     private Load load;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bid_id", nullable = false, unique = true)
+    @OneToOne
+    @JoinColumn(name = "bid_id")
     private Bid bid;
 
-    private UUID transporterId; // Redundant but useful for quick access
+    private UUID transporterId;
     private int allocatedTrucks;
     private double finalRate;
 
@@ -28,4 +26,29 @@ public class Booking {
     private BookingStatus status = BookingStatus.CONFIRMED;
 
     private LocalDateTime bookedAt = LocalDateTime.now();
+
+    // --- MANUAL GETTERS AND SETTERS ---
+    public UUID getBookingId() { return bookingId; }
+    public void setBookingId(UUID bookingId) { this.bookingId = bookingId; }
+
+    public Load getLoad() { return load; }
+    public void setLoad(Load load) { this.load = load; }
+
+    public Bid getBid() { return bid; }
+    public void setBid(Bid bid) { this.bid = bid; }
+
+    public UUID getTransporterId() { return transporterId; }
+    public void setTransporterId(UUID transporterId) { this.transporterId = transporterId; }
+
+    public int getAllocatedTrucks() { return allocatedTrucks; }
+    public void setAllocatedTrucks(int allocatedTrucks) { this.allocatedTrucks = allocatedTrucks; }
+
+    public double getFinalRate() { return finalRate; }
+    public void setFinalRate(double finalRate) { this.finalRate = finalRate; }
+
+    public BookingStatus getStatus() { return status; }
+    public void setStatus(BookingStatus status) { this.status = status; }
+
+    public LocalDateTime getBookedAt() { return bookedAt; }
+    public void setBookedAt(LocalDateTime bookedAt) { this.bookedAt = bookedAt; }
 }
